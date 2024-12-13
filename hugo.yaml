@@ -1,3 +1,63 @@
-baseURL: https://cybersafe.vip/
-languageCode: en-us
 title: CyberSafe
+baseURL: https://cybersafe.vip/
+enableGitInfo: true
+disablePathToLower: true
+enableInlineShortcodes: true
+refLinksErrorLevel: WARNING
+
+languages:
+  en:
+    languageName: English
+
+build:
+  buildStats:
+    enable: true
+    disableIDs: true
+    disableTags: true
+  cachebusters:
+    - source: assets/watching/hugo_stats\.json
+      target: styles\.css
+    - source: (postcss|tailwind)\.config\.js
+      target: css
+    - source: assets/.*\.js
+      target: js
+    - source: (assets|layouts)/.*\.(.*)$
+      target: "$2"
+
+taxonomies:
+  tag: tags
+  language: languages
+
+permalinks:
+  page:
+    manuals: /:sections[1:]/:slugorfilename/
+  section:
+    manuals: /:sections[1:]/:slugorfilename/
+
+markup:
+  tableOfContents:
+    startLevel: 2
+    endLevel: 3
+  goldmark:
+    extensions:
+      typographer: false
+    parser:
+      wrapStandAloneImageWithinParagraph: false
+      attribute:
+        block: true
+    renderer:
+      unsafe: true
+  highlight:
+    noClasses: false
+
+module:
+  hugoVersion:
+    extended: false
+    min: "0.139.0"
+  mounts:
+    - source: assets
+      target: assets
+    - source: hugo_stats.json
+      target: assets/watching/hugo_stats.json
+    - source: node_modules/@material-symbols/svg-400/rounded
+      target: assets/icons

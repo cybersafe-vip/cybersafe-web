@@ -1,0 +1,13 @@
+{{ $desc := "" }}
+{{ if .Description }}
+  {{ $desc = strings.Replace .Description "\n" " " }}
+{{ else }}
+  {{ with .File }}
+    {{ with (index (site.Data.frontmatter) .Path) }}
+      {{ with .description }}
+        {{ $desc = strings.Replace . "\n" " " | strings.TrimRight " " }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+{{ return $desc }}

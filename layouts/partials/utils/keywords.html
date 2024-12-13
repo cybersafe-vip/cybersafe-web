@@ -1,0 +1,13 @@
+{{ $keywords := "" }}
+{{ if .Keywords }}
+  {{ $keywords = collections.Apply .Keywords "strings.Trim" "." ", " }}
+{{ else }}
+  {{ with .File }}
+    {{ with (index (site.Data.frontmatter) .Path) }}
+      {{ with .keywords }}
+        {{ $keywords = collections.Apply (strings.Split (strings.Replace . "\n" " ") ",") "strings.Trim" "." " " }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+{{ return $keywords }}
